@@ -1,7 +1,0 @@
----
-
-- hosts: all
-  user: ubuntu
-  roles:
-    - "{{ playbook_dir }}"
-

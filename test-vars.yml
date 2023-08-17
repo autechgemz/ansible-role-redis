@@ -1,5 +1,0 @@
----
-
-redis_server_config_options:
-  bind:
-    - '0.0.0.0'
