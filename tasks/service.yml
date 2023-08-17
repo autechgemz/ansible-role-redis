@@ -1,0 +1,14 @@
+---
+
+- name: Service tasks
+  become: true
+  tags:
+    - redis_service
+    - redis
+  block:
+    - name: Manage redis service
+      ansible.builtin.service:
+        name: "{{ redis_service_name }}"
+        state: "{{ redis_service_ensure }}"
+        enabled: "{{ redis_service_enable }}"
+      when: not ansible_check_mode

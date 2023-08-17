@@ -1,0 +1,27 @@
+---
+- name: Debug config tasks
+  when: redis_debug is defined and redis_debug
+  block:
+    - name: Print redis_daemon_config_options
+      ansible.builtin.debug:
+        var: redis_daemon_config_options
+
+    - name: Print redis_daemon_config_default
+      ansible.builtin.debug:
+        var: redis_daemon_config_default
+
+    - name: Print redis_daemon_config_merged
+      ansible.builtin.debug:
+        var: redis_daemon_config_merged
+
+    - name: Print redis_server_config_options
+      ansible.builtin.debug:
+        var: redis_server_config_options
+
+    - name: Print redis_server_config_default
+      ansible.builtin.debug:
+        var: redis_server_config_default
+
+    - name: Print redis_server_config_merged
+      ansible.builtin.debug:
+        var: redis_server_config_merged

@@ -1,0 +1,13 @@
+---
+
+redis_debug: false
+
+redis_package_ensure: present
+
+redis_service_ensure: 'started'
+
+redis_service_enable: true
+
+redis_daemon_config_options: {}
+
+redis_server_config_options: {}

@@ -1,0 +1,37 @@
+---
+- name: Config tasks
+  become: true
+  tags:
+    - redis_config
+    - redis
+  block:
+    - name: Merge daemon configration
+      ansible.builtin.set_fact:
+        redis_daemon_config_merged: "{{ redis_daemon_config_default | ansible.builtin.combine(redis_daemon_config_options, recursive=True) }}"
+    - name: Merge server configration
+      ansible.builtin.set_fact:
+        redis_server_config_merged: "{{ redis_server_config_default | ansible.builtin.combine(redis_server_config_options, recursive=True) }}"
+
+    - name: Debug variables
+      ansible.builtin.include_tasks: debug/config.yml
+      when: redis_debug is defined and redis_debug
+
+    - name: Manage daemon configration
+      when: redis_daemon_config_merged is defined and redis_daemon_config_merged
+      ansible.builtin.template:
+        src: redis.j2
+        dest: "{{ redis_daemon_config_file }}"
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Restart redis
+
+    - name: Manage server configration
+      when: redis_server_config_merged is defined and redis_server_config_merged
+      ansible.builtin.template:
+        src: redis.conf.j2
+        dest: "{{ redis_server_config_file }}"
+        owner: redis
+        group: redis
+        mode: "0640"
+      notify: Restart redis

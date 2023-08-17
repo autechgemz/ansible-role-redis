@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+{% for keys, values in redis_daemon_config_merged.items() %}
+{{   keys }}={{ values }}
+{% endfor %}

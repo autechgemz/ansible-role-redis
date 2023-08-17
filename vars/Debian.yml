@@ -1,0 +1,11 @@
+---
+
+redis_package_name:
+  - redis-server
+  - redis-tools
+
+redis_service_name: 'redis-server'
+
+redis_daemon_config_file: '/etc/default/redis-server'
+
+redis_server_config_file: '/etc/redis/redis.conf'

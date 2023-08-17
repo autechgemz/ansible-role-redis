@@ -1,0 +1,26 @@
+# {{ ansible_managed }}
+{% for keys, values in redis_server_config_merged.items() %}
+{%   if values is mapping and (values is not string and values is not iterable) %}
+{%     for key, value in values.items() %}
+{{       key }} {{ value }}
+{%     endfor %}
+{%   elif values is iterable and (values is not string and values is not mapping) %}
+{%     for lines in values %}
+{%       if lines is mapping %}
+{{         keys }} {{ lines.values() | join(" ") }}
+{%       elif lines is iterable %}
+{{         keys if loop.first }} {{ values | join(" ") if loop.first }}
+{%       endif %}
+{%     endfor %}
+{%   else %}
+{%     if values is integer %}
+{{       keys }} {{ values }}
+{%     elif values is string and values|regex_search("yes|no|True|False|true|false") %}
+{{       keys }} {{ values | lower }}
+{%     elif values is string and values|length >= 1 %}
+{{       keys }} {{ values }}
+{%     else %}
+{# remove line #}
+{%     endif %}
+{%   endif %}
+{% endfor %}
