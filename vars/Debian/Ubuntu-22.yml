@@ -7,19 +7,22 @@ redis_server_config_default:
   bind:
     # bind: ['<address>', '<address>']
     - '127.0.0.1'
-    - '::1'
+    - '-::1'
   protected-mode: 'yes'
   port: 6379
   tcp-backlog: 511
   timeout: 0
   tcp-keepalive: 300
   daemonize: 'yes'
-  supervised: 'no'
-  pidfile: '/var/run/redis/redis-server.pid'
+  supervised: 'auto'
+  pidfile: '/run/redis/redis-server.pid'
   loglevel: 'notice'
   logfile: '/var/log/redis/redis-server.log'
   databases: 16
   always-show-logo: 'yes'
+  set-proc-title: 'yes'
+  #proc-title-template: '{title} {listen-addr} {server-mode}'
+  locale-collate: ""
   save:
     # save: [{ second: <seconds>, change: <changes> }]
     - second: 900
@@ -57,6 +60,7 @@ redis_server_config_default:
   auto-aof-rewrite-min-size: '64mb'
   aof-load-truncated: 'yes'
   aof-use-rdb-preamble: 'yes'
+  aof-timestamp-enabled: 'no'
   lua-time-limit: 5000
   slowlog-log-slower-than: 10000
   slowlog-max-len: 128
@@ -67,6 +71,8 @@ redis_server_config_default:
   list-max-ziplist-size: -2
   list-compress-depth: 0
   set-max-intset-entries: 512
+  set-max-listpack-entries: 128
+  set-max-listpack-value: 64
   zset-max-ziplist-entries: 128
   zset-max-ziplist-value: 64
   hll-sparse-max-bytes: 3000
